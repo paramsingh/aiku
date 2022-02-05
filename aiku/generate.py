@@ -2,7 +2,7 @@ import openai
 from aiku.config import OPENAI_SECRET_KEY
 
 
-def generate(theme1, theme2):
+def generate_haiku(theme1, theme2):
     """
     Generates a haiku based on the themes.
     """

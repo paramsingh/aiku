@@ -7,6 +7,7 @@ and uses GPT-3 to generate a haiku.
 import openai
 
 from flask import Flask, jsonify
+from flask_cors import cross_origin
 from aiku.generate import generate_haiku
 from aiku.config import OPENAI_SECRET_KEY
 
@@ -14,6 +15,7 @@ app = Flask(__name__)
 
 
 @app.route('/v1/haiku/<theme1>/<theme2>')
+@cross_origin()
 def haiku(theme1, theme2):
     """
     Returns a haiku based on the themes.
