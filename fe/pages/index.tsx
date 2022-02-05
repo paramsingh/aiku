@@ -1,13 +1,44 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { getPoem } from '../helpers/api'
+
+const MAX_WORD_LENGTH = 50;
 
 const Home: NextPage = () => {
   const [poem, setPoem] = useState<string>('');
   const [word1, setWord1] = useState<string>('');
   const [word2, setWord2] = useState<string>('');
+
+  const onWordInput = (e: any, fn: (s: string) => void): void => {
+    e.preventDefault();
+    fn(e.target.value);
+  }
+
+  const validateWords = (word1: string, word2: string): boolean => {
+    if (word1.length == 0 || word2.length == 0) {
+      alert("Please enter two words");
+      return false;
+    }
+
+    for (let word of [word1, word2]) {
+      if (word.split(" ").length != 1) {
+        // TODO:  alerting for now, will have to fix this up.
+        alert("Multiple words in one input are not allowed, please enter a single word");
+        return false;
+      }
+
+      if (word.length > MAX_WORD_LENGTH) {
+        // TODO:  alerting for now, will have to fix this up.
+        alert(`Word is too long, please enter a shorter word. Each word should be less than ${MAX_WORD_LENGTH} characters`);
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -27,16 +58,28 @@ const Home: NextPage = () => {
 
         <div className={styles.grid}>
             <div style={{marginRight: 10}}>
-              <input className={styles.input} type="text" placeholder="First word" onChange={(event) => setWord1(event.target.value)}/>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="First word"
+                onChange={(event) => onWordInput(event, setWord1)}
+              />
             </div>
             <div style={{marginRight: 10}}>
-            <input className={styles.input} type="text" placeholder="Second word" onChange={(event) => setWord2(event.target.value)}/>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Second word"
+                onChange={(event) => onWordInput(event, setWord2)}
+              />
             </div>
             <div>
               <button className={styles.button} onClick={(e) => {
                 e.preventDefault();
-                getPoem(word1, word2, setPoem);
-              }}>Generate haiku</button>
+                if (validateWords(word1, word2)) {
+                  getPoem(word1, word2, setPoem);
+                }
+              }}>Generate poem</button>
             </div>
         </div>
 
