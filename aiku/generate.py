@@ -51,5 +51,5 @@ Haiku:""".format(
 if __name__ == "__main__":
     openai.api_key = OPENAI_SECRET_KEY
     print("Chess, loss")
-    print(generate("chess", "loss"))
+    print(generate_haiku("chess", "loss"))
     print("================================")
