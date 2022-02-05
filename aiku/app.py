@@ -11,16 +11,34 @@ from flask_cors import cross_origin
 from aiku.generate import generate_haiku
 from aiku.config import OPENAI_SECRET_KEY
 
+MAX_WORD_LENGTH = 50
+
 app = Flask(__name__)
 
 
-@app.route('/v1/haiku/<theme1>/<theme2>')
+def _validate_word(word):
+    """
+    Checks that word isn't empty, that it is only one word and that it's not too long.
+    """
+    if len(word) == 0 or len(word.split()) > 1:
+        return False
+
+    if len(word) > MAX_WORD_LENGTH:
+        return False
+
+    return True
+
+
+@app.route('/v1/haiku/<word1>/<word2>')
 @cross_origin()
-def haiku(theme1, theme2):
+def haiku(word1, word2):
     """
     Returns a haiku based on the themes.
     """
-    haiku = generate_haiku(theme1, theme2)
+    if not _validate_word(word1) or not _validate_word(word2):
+        return jsonify({'error': 'Invalid word'}), 400
+
+    haiku = generate_haiku(word1, word2)
     return jsonify({"haiku": haiku})
 
 
