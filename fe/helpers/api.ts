@@ -6,7 +6,7 @@ export const getPoem = (
     word2: string,
     handlePoem: (poem: string) => void
 ) => {
-    axios.get(`http://aiku.param.codes/v1/haiku/${word1}/${word2}`).then(
+    axios.get(`https://aiku.param.codes/v1/haiku/${word1}/${word2}`).then(
         response => {
             const {haiku} = response.data;
             handlePoem(haiku);
