@@ -84,6 +84,8 @@ const Home: NextPage = () => {
         </div>
 
         <div className={styles.card}>{poem || "No poem yet!"}</div>
+
+        <p className={styles.donate}><a href="https://buy.stripe.com/14k4ifalecFH0cUeUV">Support this site by paying! €1 pays for ~100 poems.</a></p>
       </main>
 
       <footer className={styles.footer}>
