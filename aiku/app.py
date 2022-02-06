@@ -10,10 +10,17 @@ from flask import Flask, jsonify
 from flask_cors import cross_origin
 from aiku.generate import generate_haiku
 from aiku.config import OPENAI_SECRET_KEY
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 MAX_WORD_LENGTH = 50
 
 app = Flask(__name__)
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["10 per minute"],
+)
 
 
 def _validate_word(word):
