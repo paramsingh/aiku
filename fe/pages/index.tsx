@@ -3,6 +3,7 @@ import Head from 'next/head'
 import React, { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { getPoem } from '../helpers/api'
+import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, WhatsappShareButton, WhatsappIcon } from 'react-share';
 
 const MAX_WORD_LENGTH = 50;
 
@@ -86,6 +87,19 @@ const Home: NextPage = () => {
         <div className={styles.card}>{poem || "No poem yet!"}</div>
 
         <p className={styles.donate}><a href="https://buy.stripe.com/14k4ifalecFH0cUeUV">Support this site by paying! €1 pays for ~100 poems.</a></p>
+
+        <div className={styles.social}>
+          <TwitterShareButton title={poem} url={`\n\n - Aiku (https://aiku.param.codes)`}>
+            <TwitterIcon size={32} round={true} />
+          </TwitterShareButton>
+          <FacebookShareButton quote={poem} url={`\n\n - Aiku (https://aiku.param.codes)`}>
+            <FacebookIcon size={32} round={true} />
+          </FacebookShareButton>
+          <WhatsappShareButton title={poem} url={`\n\n - Aiku (https://aiku.param.codes)`}>
+            <WhatsappIcon size={32} round={true} />
+          </WhatsappShareButton>
+        </div>
+
       </main>
 
       <footer className={styles.footer}>
