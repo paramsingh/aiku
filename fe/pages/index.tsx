@@ -4,11 +4,14 @@ import React, { useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { getPoem } from '../helpers/api'
 import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, WhatsappShareButton, WhatsappIcon } from 'react-share';
+import { Button, Card, FormControl, InputGroup, Spinner } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MAX_WORD_LENGTH = 50;
 
 const Home: NextPage = () => {
   const [poem, setPoem] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const [word1, setWord1] = useState<string>('');
   const [word2, setWord2] = useState<string>('');
 
@@ -41,6 +44,14 @@ const Home: NextPage = () => {
     return true;
   }
 
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    if (validateWords(word1, word2)) {
+      setLoading(true);
+      getPoem(word1, word2, setPoem, setLoading);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -55,54 +66,50 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Aiku
         </h1>
-
         <p className={styles.description}>
           Give Aiku two words as a prompt and it will write you a haiku-like poem.
         </p>
-
-        <div className={styles.grid}>
-            <div style={{marginRight: 10}}>
-              <input
-                className={styles.input}
-                type="text"
+        <form onSubmit={onSubmit} style={{marginBottom: '20px'}}>
+          <div className={styles.grid}>
+            <InputGroup style={{marginBottom: '10px'}}>
+              <FormControl
+                size="lg"
                 placeholder="First word"
                 onChange={(event) => onWordInput(event, setWord1)}
               />
-            </div>
-            <div style={{marginRight: 10}}>
-              <input
-                className={styles.input}
-                type="text"
+            </InputGroup>
+            <InputGroup style={{marginBottom: '20px'}}>
+              <FormControl
+                size="lg"
                 placeholder="Second word"
                 onChange={(event) => onWordInput(event, setWord2)}
               />
-            </div>
-            <div>
-              <button className={styles.button} onClick={(e) => {
-                e.preventDefault();
-                if (validateWords(word1, word2)) {
-                  getPoem(word1, word2, setPoem);
-                }
-              }}>Generate poem</button>
-            </div>
+            </InputGroup>
+            <Button className={styles.button} type="submit" onClick={onSubmit}>Generate poem</Button>
         </div>
+      </form>
 
-        <div className={styles.card}>{poem || "No poem yet!"}</div>
+      <Card bg="light" style={{marginBottom: '20px'}}>
+        <Card.Body style={{whiteSpace: "pre-line"}}>
+          {loading ? <Spinner animation="border" variant="primary" /> : (poem || "No poem yet!")}
+        </Card.Body>
+      </Card>
 
+    <Card className="text-center" style={{marginBottom: "20px"}}>
+      <Card.Header>Share this poem</Card.Header>
+      <Card.Body>
+        <TwitterShareButton className={styles.share} title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
+          <TwitterIcon size={32} round={true} />
+        </TwitterShareButton>
+        <FacebookShareButton className={styles.share} quote={`${poem} - \n\n Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`} url={'https://aiku.param.codes'}>
+          <FacebookIcon size={32} round={true} />
+        </FacebookShareButton>
+        <WhatsappShareButton title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
+          <WhatsappIcon size={32} round={true} />
+        </WhatsappShareButton>
+      </Card.Body>
+    </Card>
         <p className={styles.donate}><a href="https://buy.stripe.com/14k4ifalecFH0cUeUV" target="_blank" rel="noreferrer noopener">Support this site by paying! €1 pays for ~100 poems.</a></p>
-
-        <div className={styles.social}>
-          <TwitterShareButton title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
-            <TwitterIcon size={32} round={true} />
-          </TwitterShareButton>
-          <FacebookShareButton quote={`${poem} - \n\n Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`} url={'https://aiku.param.codes'}>
-            <FacebookIcon size={32} round={true} />
-          </FacebookShareButton>
-          <WhatsappShareButton title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
-            <WhatsappIcon size={32} round={true} />
-          </WhatsappShareButton>
-        </div>
-
       </main>
 
       <footer className={styles.footer}>
