@@ -44,7 +44,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Aiku: The AI Haiku writer</title>
         <meta name="description" content="An AI that can write poems for you." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.ico" />
       </Head>
 
       <main className={styles.main}>
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
 
       <footer className={styles.footer}>
         <a
-          href="https://param.codes"
+          href="https://twitter.com/iliekcomputers"
           target="_blank"
           rel="noopener noreferrer"
         >
