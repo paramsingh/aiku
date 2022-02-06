@@ -42,6 +42,8 @@ def haiku(word1, word2):
     """
     Returns a haiku based on the themes.
     """
+    word1 = word1.strip()
+    word2 = word2.strip()
     if not _validate_word(word1) or not _validate_word(word2):
         return jsonify({'error': 'Invalid word'}), 400
 
@@ -51,4 +53,4 @@ def haiku(word1, word2):
 
 if __name__ == '__main__':
     openai.api_key = OPENAI_SECRET_KEY
-    app.run(debug=True)
+    app.run()

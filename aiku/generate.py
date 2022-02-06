@@ -32,6 +32,7 @@ A frog jumps into the pond,
 splash! Silence again.
 
 Input: autumn, travels
+Haiku:
 No one travels
 Along this way but I,
 This autumn evening.

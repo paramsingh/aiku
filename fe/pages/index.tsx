@@ -14,6 +14,7 @@ const Home: NextPage = () => {
 
   const onWordInput = (e: any, fn: (s: string) => void): void => {
     e.preventDefault();
+    const word = e.target.value.trim();
     fn(e.target.value);
   }
 
@@ -88,16 +89,16 @@ const Home: NextPage = () => {
 
         <div className={styles.card}>{poem || "No poem yet!"}</div>
 
-        <p className={styles.donate}><a href="https://buy.stripe.com/14k4ifalecFH0cUeUV">Support this site by paying! €1 pays for ~100 poems.</a></p>
+        <p className={styles.donate}><a href="https://buy.stripe.com/14k4ifalecFH0cUeUV" target="_blank" rel="noreferrer noopener">Support this site by paying! €1 pays for ~100 poems.</a></p>
 
         <div className={styles.social}>
-          <TwitterShareButton title={poem} url={`\n\n - Aiku (https://aiku.param.codes)`}>
+          <TwitterShareButton title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
             <TwitterIcon size={32} round={true} />
           </TwitterShareButton>
-          <FacebookShareButton quote={poem} url={`\n\n - Aiku (https://aiku.param.codes)`}>
+          <FacebookShareButton quote={`${poem} - \n\n Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`} url={'https://aiku.param.codes'}>
             <FacebookIcon size={32} round={true} />
           </FacebookShareButton>
-          <WhatsappShareButton title={poem} url={`\n\n - Aiku (https://aiku.param.codes)`}>
+          <WhatsappShareButton title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
             <WhatsappIcon size={32} round={true} />
           </WhatsappShareButton>
         </div>
