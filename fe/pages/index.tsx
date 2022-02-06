@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import { getPoem } from '../helpers/api'
 import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, WhatsappShareButton, WhatsappIcon } from 'react-share';
 import { Button, Card, FormControl, InputGroup, Spinner } from 'react-bootstrap'
+import randomWords from 'random-words';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MAX_WORD_LENGTH = 50;
@@ -12,8 +13,9 @@ const MAX_WORD_LENGTH = 50;
 const Home: NextPage = () => {
   const [poem, setPoem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [word1, setWord1] = useState<string>('');
-  const [word2, setWord2] = useState<string>('');
+  const [initialWord1, initialWord2] = randomWords(2);
+  const [word1, setWord1] = useState<string>(initialWord1);
+  const [word2, setWord2] = useState<string>(initialWord2);
 
   const onWordInput = (e: any, fn: (s: string) => void): void => {
     e.preventDefault();
@@ -74,14 +76,14 @@ const Home: NextPage = () => {
             <InputGroup style={{marginBottom: '10px'}}>
               <FormControl
                 size="lg"
-                placeholder="First word"
+                placeholder={word1}
                 onChange={(event) => onWordInput(event, setWord1)}
               />
             </InputGroup>
             <InputGroup style={{marginBottom: '20px'}}>
               <FormControl
                 size="lg"
-                placeholder="Second word"
+                placeholder={word2}
                 onChange={(event) => onWordInput(event, setWord2)}
               />
             </InputGroup>
