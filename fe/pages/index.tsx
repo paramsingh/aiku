@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import { getPoem } from '../helpers/api'
 import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, WhatsappShareButton, WhatsappIcon } from 'react-share';
@@ -10,12 +10,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MAX_WORD_LENGTH = 50;
 
+const useUniqueWord = () => {
+
+  const [word, setWord] = useState<string>('');
+
+  useEffect(() => {
+    const randomWord = randomWords(1);
+    setWord(randomWord[0]);
+  }, []);
+
+  return [word, setWord as any];
+}
 const Home: NextPage = () => {
   const [poem, setPoem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [initialWord1, initialWord2] = randomWords(2);
-  const [word1, setWord1] = useState<string>(initialWord1);
-  const [word2, setWord2] = useState<string>(initialWord2);
+
+  const [word1, setWord1] = useUniqueWord();
+  const [word2, setWord2] = useUniqueWord();
 
   const onWordInput = (e: any, fn: (s: string) => void): void => {
     e.preventDefault();
