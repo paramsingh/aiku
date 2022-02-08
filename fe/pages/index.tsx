@@ -111,7 +111,7 @@ const Home: NextPage = () => {
     <Card className="text-center" style={{marginBottom: "20px"}}>
       <Card.Header>Share this poem</Card.Header>
       <Card.Body>
-        <TwitterShareButton className={styles.share} title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
+        <TwitterShareButton className={styles.share} title={poem} url={`\n\n - @aikuthepoet on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
           <TwitterIcon size={32} round={true} />
         </TwitterShareButton>
         <FacebookShareButton className={styles.share} quote={`${poem} - \n\n Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`} url={'https://aiku.param.codes'}>
