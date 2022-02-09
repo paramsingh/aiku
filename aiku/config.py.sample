@@ -1,1 +1,8 @@
 OPENAI_SECRET_KEY = 'secret_key'
+
+# Twitter
+TWITTER_CONFIG = {
+    'API_KEY': 'API_KEY'
+    'API_KEY_SECRET': 'API_KEY_SECRET',
+    'BEARER_TOKEN': 'BEARER_TOKEN',
+}
