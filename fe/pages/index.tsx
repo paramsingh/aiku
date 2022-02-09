@@ -7,6 +7,9 @@ import { FacebookShareButton, FacebookIcon, TwitterIcon, TwitterShareButton, Wha
 import { Button, Card, FormControl, InputGroup, Spinner } from 'react-bootstrap'
 import randomWords from 'random-words';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faClipboard } from '@fortawesome/free-solid-svg-icons'
 
 const MAX_WORD_LENGTH = 50;
 
@@ -27,6 +30,8 @@ const Home: NextPage = () => {
 
   const [word1, setWord1] = useUniqueWord();
   const [word2, setWord2] = useUniqueWord();
+
+  const [copied, setCopied] = useState<boolean>(false);
 
   const onWordInput = (e: any, fn: (s: string) => void): void => {
     e.preventDefault();
@@ -61,6 +66,7 @@ const Home: NextPage = () => {
     e.preventDefault();
     if (validateWords(word1, word2)) {
       setLoading(true);
+      setCopied(false);
       getPoem(word1, word2, setPoem, setLoading);
     }
   }
@@ -111,14 +117,24 @@ const Home: NextPage = () => {
     <Card className="text-center" style={{marginBottom: "20px"}}>
       <Card.Header>Share this poem</Card.Header>
       <Card.Body>
+        <Button
+          className={styles.copy}
+          onClick={() => {
+            if (copied) return;
+            navigator.clipboard.writeText(poem).then(() => {setCopied(true)}).catch(() => console.log("error while copying"));
+          }}
+          variant="secondary"
+        >
+          <FontAwesomeIcon icon={copied ? faCheck: faClipboard} size={"xs"}></FontAwesomeIcon>
+        </Button>
         <TwitterShareButton className={styles.share} title={poem} url={`\n\n - @aikuthepoet on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
-          <TwitterIcon size={32} round={true} />
+          <TwitterIcon size={32} />
         </TwitterShareButton>
         <FacebookShareButton className={styles.share} quote={`${poem} - \n\n Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`} url={'https://aiku.param.codes'}>
-          <FacebookIcon size={32} round={true} />
+          <FacebookIcon size={32} />
         </FacebookShareButton>
         <WhatsappShareButton title={poem} url={`\n\n - Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`}>
-          <WhatsappIcon size={32} round={true} />
+          <WhatsappIcon size={32} />
         </WhatsappShareButton>
       </Card.Body>
     </Card>

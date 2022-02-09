@@ -98,6 +98,11 @@
 .share {
   margin-right: 5px;
 }
+
+.copy {
+  margin-right: 5px;
+  margin-top: 5px;
+}
 .card:hover,
 .card:focus,
 .card:active {
