@@ -1,0 +1,3 @@
+
+class UnsafeOutput(Exception):
+    pass

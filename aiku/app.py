@@ -8,8 +8,10 @@ import openai
 
 from flask import Flask, jsonify
 from flask_cors import cross_origin
+from aiku.errors import UnsafeOutput
 from aiku.generate import generate_haiku
 from aiku.config import OPENAI_SECRET_KEY
+
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -45,12 +47,15 @@ def haiku(word1, word2):
     word1 = word1.strip()
     word2 = word2.strip()
     if not _validate_word(word1) or not _validate_word(word2):
-        return jsonify({'error': 'Invalid word'}), 400
+        return jsonify({"error": "invalid_word", 'message': 'Invalid word'}), 400
 
-    haiku = generate_haiku(word1, word2)
+    try:
+        haiku = generate_haiku(word1, word2, user=get_remote_address())
+    except UnsafeOutput:
+        return jsonify({"error": "unsafe_output", "message": "invalid input, only returns unsafe output"}), 400
     return jsonify({"haiku": haiku})
 
 
 if __name__ == '__main__':
     openai.api_key = OPENAI_SECRET_KEY
-    app.run()
+    app.run(debug=True)
