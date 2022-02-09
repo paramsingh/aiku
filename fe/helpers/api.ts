@@ -13,5 +13,19 @@ export const getPoem = (
             handlePoem(haiku);
             setLoading(false);
         }
-    )
+    ).catch(err => {
+        if (err.response.status == 400) {
+            const {error} = err.response.data;
+            if (error == 'unsafe_output') {
+                const poem = `"Lovely Emily,
+don't say those naughty words!" cried Alfred,
+Who was appalled.`
+                handlePoem(poem);
+                setLoading(false);
+            }
+        } else {
+            handlePoem("Something went wrong, aiku is hitting writer's block.")
+            setLoading(false);
+        }
+    })
 }
