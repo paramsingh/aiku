@@ -101,7 +101,8 @@
 
 .copy {
   margin-right: 5px;
-  margin-top: 5px;
+  height: 32px;
+  border-radius: unset;
 }
 .card:hover,
 .card:focus,
