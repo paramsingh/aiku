@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faClipboard } from '@fortawesome/free-solid-svg-icons'
+import { AikuHead } from '../components/AikuHead'
 
 const MAX_WORD_LENGTH = 50;
 
@@ -73,14 +74,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Aiku: The AI Haiku writer</title>
-        <meta name="description" content="An AI that can write poems for you." />
-        <link rel="icon" href="/logo.ico" />
-        <script data-goatcounter="https://aiku.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-      </Head>
-
+      <AikuHead />
       <main className={styles.main}>
         <h1 className={styles.title}>
           Aiku
@@ -138,7 +132,7 @@ const Home: NextPage = () => {
         </WhatsappShareButton>
       </Card.Body>
     </Card>
-        <p className={styles.donate}><a href="https://buy.stripe.com/14k4ifalecFH0cUeUV" target="_blank" rel="noreferrer noopener">Support this site by paying! €1 pays for ~100 poems.</a></p>
+        <p className={styles.donate}><a href="/donations" rel="noreferrer noopener">Support this site by paying! €1 pays for ~100 poems.</a></p>
       </main>
 
       <footer className={styles.footer}>
