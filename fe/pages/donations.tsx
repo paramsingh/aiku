@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
 import React from 'react'
 import { AikuHead } from '../components/AikuHead'
+import Link from 'next/link'
 
 // This page explains that donations to the site go to supporting aiku. 1 eur pays for ~100 poems.
 const Donations: NextPage = () => {
@@ -11,7 +12,9 @@ const Donations: NextPage = () => {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    <a href="/">Aiku</a>
+                    <div className={styles.donate}>
+                        <Link href="/">Aiku</Link>
+                    </div>
                 </h1>
 
                 <h2>

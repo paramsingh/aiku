@@ -11,6 +11,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faClipboard } from '@fortawesome/free-solid-svg-icons'
 import { AikuHead } from '../components/AikuHead'
+import Link from 'next/link'
 
 const MAX_WORD_LENGTH = 50;
 
@@ -132,7 +133,7 @@ const Home: NextPage = () => {
         </WhatsappShareButton>
       </Card.Body>
     </Card>
-        <p className={styles.donate}><a href="/donations" rel="noreferrer noopener">Support this site by paying! €1 pays for ~100 poems.</a></p>
+        <p className={styles.donate}><Link href="/donations">Support this site by paying! €1 pays for ~100 poems.</Link></p>
       </main>
 
       <footer className={styles.footer}>
