@@ -1,6 +1,6 @@
 import openai
 import tweepy
-from random_word import RandomWords
+from aiku.random_word import get_random_words
 
 import aiku.config as config
 from aiku.generate import generate_haiku
@@ -18,18 +18,9 @@ def create_tweepy_client():
     return api
 
 
-def get_random_words():
-    r = RandomWords()
-    for _ in range(20):
-        word1 = r.get_random_word(hasDictionaryDef="true")
-        word2 = r.get_random_word(hasDictionaryDef="true")
-        if word1 and word2 and word1 != word2:
-            return word1, word2
-
-
 def post_tweet():
     api = create_tweepy_client()
-    word1, word2 = get_random_words()
+    word1, word2 = get_random_words(2)
     print(f"word1: {word1}, word2: {word2}")
     if not word1 or not word2:
         print("words are invalid exiting")
