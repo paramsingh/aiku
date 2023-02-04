@@ -1,25 +1,21 @@
 import openai
-import tweepy
 from aiku.random_word import get_random_words
 
 import aiku.config as config
 from aiku.generate import generate_haiku
+from mastodon import Mastodon
 
 
-def create_tweepy_client():
-    auth = tweepy.OAuth1UserHandler(
-        config.TWITTER_CONFIG["API_KEY"],
-        config.TWITTER_CONFIG["API_KEY_SECRET"],
-        config.TWITTER_CONFIG["ACCESS_TOKEN"],
-        config.TWITTER_CONFIG["ACCESS_TOKEN_SECRET"],
+def create_mastodon_client():
+    mastodon = Mastodon(
+        access_token=config.MASTODON_CONFIG["ACCESS_TOKEN"],
+        api_base_url='https://social.param.codes'
     )
-
-    api = tweepy.API(auth)
-    return api
+    return mastodon
 
 
 def post_tweet():
-    api = create_tweepy_client()
+    client = create_mastodon_client()
     word1, word2 = get_random_words(2)
     print(f"word1: {word1}, word2: {word2}")
     if not word1 or not word2:
@@ -27,9 +23,9 @@ def post_tweet():
         return
     haiku = generate_haiku(word1, word2, user='aikucronbot')
     print(f"haiku: {haiku}")
-    tweet = f"{haiku}\n\n - @aikuthepoet on \"{word1}\" and \"{word2}\" (aiku.param.codes)"
+    tweet = f"{haiku}\n\n - @aiku on \"{word1}\" and \"{word2}\" (https://aiku.param.codes)"
     print(f"tweet: {tweet}")
-    tweet = api.update_status(tweet)
+    client.status_post(tweet)
     print(f"tweeted! {tweet}")
 
 
