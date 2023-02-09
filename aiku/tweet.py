@@ -14,8 +14,9 @@ def create_mastodon_client() -> Mastodon:
     return mastodon
 
 
-def post_to_mastodon(client: Mastodon, haiku: str):
-    client.status_post(haiku)
+def post_to_mastodon(client: Mastodon, haiku: str, word1: str, word2: str):
+    tweet = f"{haiku}\n\n - @aiku on \"{word1}\" and \"{word2}\" (https://aiku.param.codes)"
+    client.status_post(tweet)
 
 
 def post_tweet():
@@ -27,10 +28,8 @@ def post_tweet():
         return
     haiku = generate_haiku(word1, word2, user='aikucronbot')
     print(f"haiku: {haiku}")
-    tweet = f"{haiku}\n\n - @aiku on \"{word1}\" and \"{word2}\" (https://aiku.param.codes)"
-    print(f"tweet: {tweet}")
-    post_to_mastodon(client, tweet)
-    print(f"tweeted! {tweet}")
+    post_to_mastodon(client, haiku, word1, word2)
+    print(f"tweeted!")
 
 
 if __name__ == '__main__':

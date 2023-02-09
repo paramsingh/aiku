@@ -57,7 +57,7 @@ def haiku(word1, word2):
         return jsonify({"error": "unsafe_output", "message": "invalid input, only returns unsafe output"}), 400
 
     try:
-        post_to_mastodon(mastodon, haiku)
+        post_to_mastodon(mastodon, haiku, word1, word2)
     except Exception as e:
         print(f"Error posting to mastodon: {e}")
     return jsonify({"haiku": haiku})
