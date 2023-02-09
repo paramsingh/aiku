@@ -11,6 +11,7 @@ from flask_cors import cross_origin
 from aiku.errors import UnsafeOutput
 from aiku.generate import generate_haiku
 from aiku.config import OPENAI_SECRET_KEY
+from aiku.tweet import create_mastodon_client, post_to_mastodon
 
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -23,6 +24,7 @@ limiter = Limiter(
     key_func=get_remote_address,
     default_limits=["1 per second", "2000 per day"],
 )
+mastodon = create_mastodon_client()
 
 
 def _validate_word(word):
@@ -53,6 +55,11 @@ def haiku(word1, word2):
         haiku = generate_haiku(word1, word2, user=get_remote_address())
     except UnsafeOutput:
         return jsonify({"error": "unsafe_output", "message": "invalid input, only returns unsafe output"}), 400
+
+    try:
+        post_to_mastodon(mastodon, haiku)
+    except Exception as e:
+        print(f"Error posting to mastodon: {e}")
     return jsonify({"haiku": haiku})
 
 

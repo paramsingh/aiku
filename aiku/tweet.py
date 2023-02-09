@@ -6,12 +6,16 @@ from aiku.generate import generate_haiku
 from mastodon import Mastodon
 
 
-def create_mastodon_client():
+def create_mastodon_client() -> Mastodon:
     mastodon = Mastodon(
         access_token=config.MASTODON_CONFIG["ACCESS_TOKEN"],
         api_base_url='https://social.param.codes'
     )
     return mastodon
+
+
+def post_to_mastodon(client: Mastodon, haiku: str):
+    client.status_post(haiku)
 
 
 def post_tweet():
@@ -25,7 +29,7 @@ def post_tweet():
     print(f"haiku: {haiku}")
     tweet = f"{haiku}\n\n - @aiku on \"{word1}\" and \"{word2}\" (https://aiku.param.codes)"
     print(f"tweet: {tweet}")
-    client.status_post(tweet)
+    post_to_mastodon(client, tweet)
     print(f"tweeted! {tweet}")
 
 
