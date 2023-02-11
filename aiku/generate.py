@@ -47,14 +47,13 @@ Haiku:""".format(
                 theme1,
                 theme2,
             ),
-            max_tokens=22,
+            max_tokens=50,
             temperature=0.95,
             user=user,
         )
         content = completion.choices[0].text
         if filter(content) != '2':
-            lines = completion.choices[0].text.split("\n")[1:4]
-            return '\n'.join(lines)
+            return content
     raise UnsafeOutput
 
 
