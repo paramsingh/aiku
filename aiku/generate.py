@@ -12,13 +12,15 @@ def generate_haiku(theme1, theme2, user=None):
     """
     for _ in range(UNSAFE_OUTPUT_RETRIES):
         completion = openai.Completion.create(
-            engine="davinci",
+            engine="text-davinci-003",
             prompt="""
 A haiku is a poem containing (in English) a total of 17 syllables shared between three lines that are arranged in a pattern of 5-7-5. The fist line consists of 5 syllables, the second line 7, and the last line contains another 5 syllables.
 
-Write a haiku containing the two words in the input. The haiku should ALWAYS be exactly three lines long. You should write only one haiku in 3 lines. See the examples for details on how to format your haiku.
+Write a haiku containing the two words in the input. The haiku should ALWAYS be exactly three lines long.
 
 Also, DO NOT output anything after you've written your haiku.
+
+Here are a few examples of haikus:
 
 Example Input: autumn, father
 Example Haiku:
@@ -44,18 +46,20 @@ No one travels
 Along this way but I,
 This autumn evening.
 
+Now let's write a real haiku.
+
 Input: {}, {}
 Haiku:""".format(
                 theme1,
                 theme2,
             ),
             max_tokens=30,
-            temperature=0.95,
-            user=user,
+            temperature=1.2,
+            user=str(user),
         )
         content = completion.choices[0].text
         if filter(content) != '2':
-            return content
+            return content.strip()
     raise UnsafeOutput
 
 
