@@ -16,7 +16,7 @@ def generate_haiku(theme1, theme2, user=None):
             prompt="""
 A haiku is a poem containing (in English) a total of 17 syllables shared between three lines that are arranged in a pattern of 5-7-5. The fist line consists of 5 syllables, the second line 7, and the last line contains another 5 syllables.
 
-Write a haiku containing the two words in the input. The haiku should ALWAYS be exactly three lines long.
+Write a haiku containing the two words in the input. The haiku should ALWAYS be exactly three lines long. You should write only one haiku in 3 lines.
 
 Input: autumn, father
 Haiku:
@@ -47,7 +47,7 @@ Haiku:""".format(
                 theme1,
                 theme2,
             ),
-            max_tokens=50,
+            max_tokens=30,
             temperature=0.95,
             user=user,
         )
