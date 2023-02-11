@@ -107,7 +107,7 @@ const Home: NextPage = () => {
           <Link href="https://social.param.codes/@aiku">
             <a>Mastodon</a>
           </Link>{" "}
-          for a poem every day.
+          to see all the poems generated here.
         </p>
         <form onSubmit={onSubmit} style={{ marginBottom: "20px" }}>
           <div className={styles.grid}>
