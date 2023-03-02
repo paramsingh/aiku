@@ -11,53 +11,27 @@ def generate_haiku(theme1, theme2, user=None):
     Generates a haiku based on the themes.
     """
     for _ in range(UNSAFE_OUTPUT_RETRIES):
-        completion = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt="""
-A haiku is a poem containing (in English) a total of 17 syllables shared between three lines that are arranged in a pattern of 5-7-5. The fist line consists of 5 syllables, the second line 7, and the last line contains another 5 syllables.
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system",
+                    "content": "A haiku is a poem containing (in English) a total of 17 syllables shared between three lines that are arranged in a pattern of 5-7-5. The fist line consists of 5 syllables, the second line 7, and the last line contains another 5 syllables."},
+                {"role": "system", "content": "Write a haiku based on the two words the user gives you."},
+                {"role": "system", "content": "Also, DO NOT output anything after you've written your haiku."},
+                {"role": "user", "content": "autumn, father"},
+                {"role": "assistant", "content": "First autumn morning:\nthe mirror I stare into\nshows my father's face."},
+                {"role": "user", "content": "snowdrops, glory"},
+                {"role": "assistant", "content": "Delightful display\nSnowdrops bow their pure white heads\nTo the sun's glory."},
+                {"role": "user", "content": "silent, frog"},
+                {"role": "assistant", "content": "An old silent pond...\nA frog jumps into the pond,\nsplash! Silence again."},
+                {"role": "user", "content": "autumn, travels"},
+                {"role": "assistant",
+                    "content": "No one travels\nAlong this way but I,\nThis autumn evening."},
+                {"role": "user", "content": f"{theme1}, {theme2}"},
 
-Write a haiku containing the two words in the input. The haiku should ALWAYS be exactly three lines long.
-
-Also, DO NOT output anything after you've written your haiku.
-
-Here are a few examples of haikus:
-
-Example Input: autumn, father
-Example Haiku:
-First autumn morning:
-the mirror I stare into
-shows my father's face.
-
-Example Input: snowdrops, glory
-Example Haiku:
-Delightful display
-Snowdrops bow their pure white heads
-To the sun's glory.
-
-Example Input: silent, frog
-Example Haiku:
-An old silent pond...
-A frog jumps into the pond,
-splash! Silence again.
-
-Example Input: autumn, travels
-Example Haiku:
-No one travels
-Along this way but I,
-This autumn evening.
-
-Now let's write a real haiku.
-
-Input: {}, {}
-Haiku:""".format(
-                theme1,
-                theme2,
-            ),
-            max_tokens=30,
-            temperature=1.2,
-            user=str(user),
+            ]
         )
-        content = completion.choices[0].text
+        content = completion.choices[0]["message"]["content"]
         if filter(content) != '2':
             return content.strip()
     raise UnsafeOutput
