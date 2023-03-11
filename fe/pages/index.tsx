@@ -97,7 +97,12 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ paddingRight: "20px" }}>
-            <Image src={AikuImage} height="150px" width="150px" />
+            <Image
+              src={AikuImage}
+              height="150px"
+              width="150px"
+              alt="image of aiku"
+            />
           </div>
           <h1 className={styles.title}>Aiku</h1>
         </div>
@@ -110,12 +115,33 @@ const Home: NextPage = () => {
         </p>
         <p
           className={styles.description}
-          style={{ marginTop: "0", fontSize: "13px", marginBottom: "20px" }}
+          style={{
+            marginTop: "0",
+            fontSize: "13px",
+            marginBottom: "20px",
+          }}
         >
-          (Created by iliekcomputers.{" "}
-          <Link href="https://twitter.com/iliekcomputers">
-            Follow me on Twitter
-          </Link>{" "}
+          (Created by{" "}
+          <a
+            href="https://param.codes"
+            style={{ textDecoration: "none", fontWeight: "bold" }}
+          >
+            iliekcomputers
+          </a>
+          . Follow me on{" "}
+          <a
+            href="https://twitter.com/iliekcomputers"
+            style={{ textDecoration: "none", fontWeight: "bold" }}
+          >
+            Twitter
+          </a>{" "}
+          or subscribe to my{" "}
+          <a
+            href="https://newsletter.param.codes"
+            style={{ textDecoration: "none", fontWeight: "bold" }}
+          >
+            newsletter
+          </a>{" "}
           to stay updated on new features, request them, or to just show
           support!)
         </p>
