@@ -97,17 +97,27 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ paddingRight: "20px" }}>
-            <Image src={AikuImage} height="200px" width="200px" />
+            <Image src={AikuImage} height="150px" width="150px" />
           </div>
           <h1 className={styles.title}>Aiku</h1>
         </div>
-        <p className={styles.description}>
+        <p
+          className={styles.description}
+          style={{ marginBottom: "10px", fontSize: "20px" }}
+        >
           Give Aiku two words as a prompt and it will write you a haiku-like
-          poem. Follow Aiku on{" "}
-          <Link href="https://social.param.codes/@aiku">
-            <a>Mastodon</a>
+          poem.
+        </p>
+        <p
+          className={styles.description}
+          style={{ marginTop: "0", fontSize: "13px", marginBottom: "20px" }}
+        >
+          (Created by iliekcomputers.{" "}
+          <Link href="https://twitter.com/iliekcomputers">
+            Follow me on Twitter
           </Link>{" "}
-          to see all the poems generated here.
+          to stay updated on new features, request them, or to just show
+          support!)
         </p>
         <form onSubmit={onSubmit} style={{ marginBottom: "20px" }}>
           <div className={styles.grid}>
@@ -147,15 +157,19 @@ const Home: NextPage = () => {
             <Button
               className={styles.copy}
               onClick={() => {
+                const copyPoem = `${poem} \n- Aiku on "${word1}" and "${word2}" (https://aiku.param.codes)`;
                 if (copied) return;
                 navigator.clipboard
-                  .writeText(poem)
+                  .writeText(copyPoem)
                   .then(() => {
                     setCopied(true);
                   })
-                  .catch(() => console.log("error while copying"));
+                  .catch(() => alert("error while copying, please try again"));
               }}
               variant="secondary"
+              onMouseEnter={() => {
+                setCopied(false);
+              }}
             >
               <FontAwesomeIcon
                 icon={copied ? faCheck : faClipboard}
@@ -192,12 +206,8 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://twitter.com/iliekcomputers"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Created by Param.
+        <a href="https://social.param.codes/@aiku">
+          Follow Aiku on Mastodon to see all the poems generated here.
         </a>
       </footer>
     </div>
